@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <%- include('partials/head'); %>
+  <body>
+    <main>
+      <form method="post" action="/proxy">
+        <input type="text" name="url" id="url">
+        <input type="submit" value="submit" >
+
+      </form>
+    </main>
+    <h1 class="emboss-80s"><%= title %></h1>
+
+    <%- include('partials/nav'); %>
+    <hr />
+    <%- proxyHTML %>
+    
+  </body>
+</html>
