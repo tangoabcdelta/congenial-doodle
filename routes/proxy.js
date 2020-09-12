@@ -14,33 +14,6 @@ router.get('/', function(req, res, next) {
 });
 
 
-// read a file locally just to test
-router.put('/', async (req, res, next) => {
-  const filePath = path.join(__dirname, '../sample responses/demo.firefox.html');
-  const options = {
-      encoding: 'utf8',
-      flag:'r'
-  };
-  try {
-    let html = await fs.readFileSync(filePath, options);
-    
-
-    html = removeTagsAndRender(html, {
-      log: true
-    });
-    res.render('proxy', {
-      title: 'PPPPRRR',
-      contextTitle: '',
-      proxyHTML: html
-    });
-  }
-  catch(error) {
-    console.log(`error: ${error}`);
-  }
-  console.log(`xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx`); 
-
-})
-
 
 router.post('/', async (req, res, next) => {
   const { body: { url } } = req;
@@ -106,5 +79,35 @@ function removeTagsAndRender(markup, options) {
 
   return html;
 }
+
+
+
+
+// read a file locally just to test
+router.put('/', async (req, res, next) => {
+  const filePath = path.join(__dirname, '../sample responses/demo.firefox.html');
+  const options = {
+      encoding: 'utf8',
+      flag:'r'
+  };
+  try {
+    let html = await fs.readFileSync(filePath, options);
+    
+
+    html = removeTagsAndRender(html, {
+      log: true
+    });
+    res.render('proxy', {
+      title: 'PPPPRRR',
+      contextTitle: '',
+      proxyHTML: html
+    });
+  }
+  catch(error) {
+    console.log(`error: ${error}`);
+  }
+  console.log(`xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx`); 
+
+})
 
 module.exports = router;

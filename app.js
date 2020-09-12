@@ -6,6 +6,7 @@ const logger = require('morgan');
 const bodyParser = require("body-parser");
 
 const googledocsapi = require('./middleware/googledocs.api.middleware');
+const prerenderMiddleware = require('./middleware/prerender.middleware');
 
 const indexRouter = require('./routes/index');
 const proxyServerRouter = require('./routes/proxy');
@@ -15,6 +16,7 @@ const newsFeedRouter = require('./routes/newsfeed');
 const albumFeedRouter = require('./routes/albumfeed');
 const signInRouter = require('./routes/signIn');
 const sheet1Router = require('./routes/sheet1');
+const torqueRouter = require('./routes/torqueRouter');
 
 var app = express();
 
@@ -31,8 +33,10 @@ app.use(cookieParser('secret'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(googledocsapi);
+//app.use(googledocsapi);
+
+// app.use('/ng', prerenderMiddleware);
+
 
 app.use('/', indexRouter);
 app.use('/proxy', proxyServerRouter);
@@ -42,8 +46,9 @@ app.use('/users', usersRouter);
 app.use('/newsfeed', newsFeedRouter);
 app.use('/albumfeed', albumFeedRouter);
 app.use('/sheet1', sheet1Router);
-app.use('/ng', sheet1Router);
 
+app.use('/%F0%9F%9A%97', torqueRouter); // /🚗
+app.use(express.static(path.join(__dirname, 'public')));
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
